@@ -1,44 +1,58 @@
+# Material-UI Table Wrappers
+
+This project aims at adding:
+- Sorting
+- Pagination
+- Expandable Rows
+to Material-UI React Table component. This is for `material-ui` npm package i.e. < Material-UI v1, for `@core/material-ui` npm package you should use the provided Table components itself.
+
+<hr>
+
+## Sortable Table
+This is a generic wrapper over the table header row and header columns which allows for sorting by column on column header click and also sets the corresponding ascending and descending icons on the column on which sort is applied.
+### SortableTableHeaderRow
+A wrapper for `<TableHeaderRow>`. This accepts a `handleSort` prop everything else will be passed on to the underlying `<TableHeaderRow>` component.
+
+A wrapper for the entire row is required to maintain the sorting state across columns.
+
+The `handleSort` callback allows for both server side and client side sorting. The method signature is:
+```
+/**
+ * order: { ASC, DESC, NONE }
+ * column: 0 based column number (index)
+ */
+handleSort: (order: SortType, column: number) => void;
+```
+
+### SortableTableColumn
+A wrapper for `<TableHeaderColumn>`. This is required to maintain the sorting state on each column and accordingly show the sort icons and bind the click events to enable sorting on header click.
+
+It doesn't accept any additional props. Any props given would be passed on to the underlying `<TableHeaderColumn>` component.
+
+If for certain columns sorting is not required you can use the normal `<TableHeaderColumn>` directly alongside `<SortableTableHeaderRow>`. This distinction also helps in identifying which columns have sorting enabled which does not.
+
+### Sample usage:
+```
+const handleSort = (order: SortType, column: number) => {
+  /* Sorting logic goes here */
+}
+
+<Table selectable={false} fixedHeader={false}>
+  <TableHeader  displaySelectAll={false} adjustForCheckbox={false}>
+    <SortableTableHeader handleSort={this.handleSort}>
+      <SortableTableHeaderColumn>Column 1</SortableTableHeaderColumn>
+      <SortableTableHeaderColumn>Column 2</SortableTableHeaderColumn>
+      <TableHeaderColumn>Column 3</TableHeaderColumn>
+    </SortableTableHeader>
+  </TableHeader>
+</Table>
+```
+
+## PaginatedTable
+`TBA`
+
+## ExpandableTableRow
+`TBA`
+<hr>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
